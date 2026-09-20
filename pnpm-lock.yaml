@@ -11,6 +11,18 @@ importers:
       '@neondatabase/serverless':
         specifier: ^1.0.1
         version: 1.1.0
+      '@tailwindcss/postcss':
+        specifier: ^4.0.0
+        version: 4.3.3
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.20.4
+      '@types/react':
+        specifier: ^19.0.8
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.0.3
+        version: 19.3.0(@types/react@19.3.0)
       '@upstash/ratelimit':
         specifier: ^2.0.5
         version: 2.1.0(@upstash/redis@1.38.4)
@@ -41,6 +53,9 @@ importers:
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.3.0)(react@19.3.0)
+      postcss:
+        specifier: ^8.5.2
+        version: 8.5.28
       react:
         specifier: ^19.0.0
         version: 19.3.0
@@ -53,31 +68,16 @@ importers:
       tailwind-merge:
         specifier: ^3.0.0
         version: 3.7.0
-    devDependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.0.0
-        version: 4.3.3
-      '@types/node':
-        specifier: ^22.13.0
-        version: 22.20.4
-      '@types/react':
-        specifier: ^19.0.8
-        version: 19.3.0
-      '@types/react-dom':
-        specifier: ^19.0.3
-        version: 19.3.0(@types/react@19.3.0)
-      drizzle-kit:
-        specifier: ^0.30.5
-        version: 0.30.6
-      postcss:
-        specifier: ^8.5.2
-        version: 8.5.28
       tailwindcss:
         specifier: ^4.0.0
         version: 4.3.3
       typescript:
         specifier: ^5.7.3
         version: 5.9.3
+    devDependencies:
+      drizzle-kit:
+        specifier: ^0.30.5
+        version: 0.30.6
 
 packages:
 

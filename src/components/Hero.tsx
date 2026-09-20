@@ -97,103 +97,106 @@ export const Hero: React.FC<{ onGetStarted?: () => void }> = ({ onGetStarted }) 
 
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      {/* Background Glowing Orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-600/30 via-purple-600/20 to-sky-500/20 blur-[130px] rounded-full pointer-events-none animate-pulse-glow" />
-      <div className="absolute top-1/3 right-10 w-[300px] h-[300px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+      
+      {/* Soft Pastel Mesh Background Orbs */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-purple-200/70 via-pink-200/60 to-sky-200/70 blur-[130px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/3 left-10 w-[350px] h-[350px] bg-amber-100/80 blur-[110px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-10 w-[350px] h-[350px] bg-cyan-100/80 blur-[110px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto space-y-6">
           
-          {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/80 shadow-inner shadow-indigo-500/10">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 absolute" />
-            <span className="text-xs font-semibold text-slate-200 tracking-wide pl-2">
+          {/* Eyebrow Badge with Soft Pastel Styling */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-violet-200 shadow-md shadow-violet-500/5 backdrop-blur-md">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-pink-500 animate-ping" />
+            <span className="flex h-2.5 w-2.5 rounded-full bg-pink-500 absolute" />
+            <span className="text-xs font-bold text-slate-700 tracking-wide pl-2">
               Next-Gen Serverless AI Content Platform
             </span>
-            <span className="text-slate-500">|</span>
-            <span className="text-xs font-medium text-indigo-400 flex items-center gap-1">
-              Gemini & LLM Pipelines <Sparkles className="w-3.5 h-3.5" />
+            <span className="text-slate-300">|</span>
+            <span className="text-xs font-bold text-violet-600 flex items-center gap-1">
+              Gemini 3.5 Engine <Sparkles className="w-3.5 h-3.5 text-pink-500" />
             </span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+          {/* Main Pastel Gradient Headline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.1]">
             Craft, Scale & Publish Content with{" "}
-            <span className="text-gradient-purple-cyan drop-shadow-sm">
+            <span className="text-gradient-pastel drop-shadow-xs">
               Serverless AI Intelligence
             </span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
             Generate SEO-optimized articles, social campaigns, and documentation in milliseconds. Built on serverless edge functions with zero cold starts.
           </p>
 
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          {/* Pastel Action CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
             <button
               onClick={onGetStarted}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-base text-white bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-600 hover:to-purple-700 shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 transition-all flex items-center justify-center gap-2 group active:scale-95"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-base text-white bg-gradient-to-r from-violet-600 via-pink-500 to-sky-500 hover:from-violet-700 hover:to-sky-600 shadow-xl shadow-violet-500/20 hover:shadow-violet-500/35 transition-all flex items-center justify-center gap-2.5 group active:scale-95"
             >
               Start Generating Free
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <a
               href="#architecture"
-              className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-base text-slate-300 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:text-white transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-base text-slate-700 bg-white/90 hover:bg-white border border-slate-200/90 hover:text-slate-900 transition-all flex items-center justify-center gap-2 shadow-sm"
             >
-              <Zap className="w-4 h-4 text-amber-400" />
+              <Zap className="w-4 h-4 text-amber-500" />
               View Architecture
             </a>
           </div>
 
           {/* Feature Highlights Pill Bar */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 font-medium">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-600 font-semibold">
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-emerald-200 shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
               <span>Sub-15ms Cold Starts</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-purple-200 shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-purple-500" />
               <span>Multi-Model Routing</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-sky-200 shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-sky-500" />
               <span>Direct Headless CMS Sync</span>
             </div>
           </div>
         </div>
 
-        {/* Live Studio Mock Widget */}
-        <div className="mt-14 max-w-5xl mx-auto rounded-2xl glass-card border border-slate-800/90 p-2 sm:p-4 shadow-2xl shadow-slate-950/80 glow-indigo">
+        {/* Live Studio Mock Widget with Light Glassmorphism */}
+        <div className="mt-14 max-w-5xl mx-auto rounded-3xl glass-card-vibrant p-3 sm:p-5 shadow-2xl">
+          
           {/* Top Bar Header */}
-          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-950/80 rounded-xl border border-slate-800/60">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-white/90 rounded-2xl border border-slate-200/80 shadow-xs">
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                <div className="w-3 h-3 rounded-full bg-rose-400" />
+                <div className="w-3 h-3 rounded-full bg-amber-400" />
+                <div className="w-3 h-3 rounded-full bg-emerald-400" />
               </div>
-              <span className="text-xs font-mono text-slate-400 ml-2 flex items-center gap-1.5">
-                <Bot className="w-4 h-4 text-indigo-400" />
+              <span className="text-xs font-mono font-bold text-slate-700 ml-2 flex items-center gap-1.5">
+                <Bot className="w-4 h-4 text-violet-600" />
                 Aether Edge AI Studio
               </span>
             </div>
 
             {/* Presets Selection Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+            <div className="flex items-center gap-2 overflow-x-auto py-1">
               {PROMPT_PRESETS.map((preset, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSelectPreset(idx)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
                     selectedPresetIndex === idx
-                      ? 'bg-indigo-600/90 text-white shadow-md shadow-indigo-600/30'
-                      : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                      ? 'bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-md shadow-violet-500/20'
+                      : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
                   }`}
                 >
-                  <Sparkles className="w-3 h-3 text-indigo-300" />
+                  <Sparkles className={`w-3.5 h-3.5 ${selectedPresetIndex === idx ? 'text-white' : 'text-violet-500'}`} />
                   {preset.type}
                 </button>
               ))}
@@ -202,16 +205,16 @@ export const Hero: React.FC<{ onGetStarted?: () => void }> = ({ onGetStarted }) 
             {/* Copy Button */}
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800 transition-colors"
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/80 px-3.5 py-1.5 rounded-xl border border-slate-200 transition-colors"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400 font-medium">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-600 font-bold">Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-slate-400" />
+                  <Copy className="w-3.5 h-3.5 text-violet-600" />
                   <span>Copy Content</span>
                 </>
               )}
@@ -219,51 +222,59 @@ export const Hero: React.FC<{ onGetStarted?: () => void }> = ({ onGetStarted }) 
           </div>
 
           {/* Model Status Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-3 px-2">
-            <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/50 flex items-center gap-2">
-              <Bot className="w-4 h-4 text-purple-400" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 px-1">
+            <div className="bg-white/90 rounded-xl p-3 border border-purple-100 flex items-center gap-2.5 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
+                <Bot className="w-4 h-4 text-purple-600" />
+              </div>
               <div>
-                <p className="text-[10px] text-slate-500 font-mono uppercase">Active Model</p>
-                <p className="text-xs font-semibold text-slate-200">{currentPreset.model}</p>
+                <p className="text-[10px] text-purple-600 font-mono uppercase font-bold">Active Model</p>
+                <p className="text-xs font-extrabold text-slate-800">{currentPreset.model}</p>
               </div>
             </div>
 
-            <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/50 flex items-center gap-2">
-              <Gauge className="w-4 h-4 text-sky-400" />
+            <div className="bg-white/90 rounded-xl p-3 border border-sky-100 flex items-center gap-2.5 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center">
+                <Gauge className="w-4 h-4 text-sky-600" />
+              </div>
               <div>
-                <p className="text-[10px] text-slate-500 font-mono uppercase">Generation Speed</p>
-                <p className="text-xs font-semibold text-slate-200">{tokensPerSec} tokens/sec</p>
+                <p className="text-[10px] text-sky-600 font-mono uppercase font-bold">Generation Speed</p>
+                <p className="text-xs font-extrabold text-slate-800">{tokensPerSec} tokens/sec</p>
               </div>
             </div>
 
-            <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/50 flex items-center gap-2">
-              <Flame className="w-4 h-4 text-amber-400" />
+            <div className="bg-white/90 rounded-xl p-3 border border-amber-100 flex items-center gap-2.5 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                <Flame className="w-4 h-4 text-amber-600" />
+              </div>
               <div>
-                <p className="text-[10px] text-slate-500 font-mono uppercase">Latency</p>
-                <p className="text-xs font-semibold text-slate-200">14 ms (Serverless)</p>
+                <p className="text-[10px] text-amber-600 font-mono uppercase font-bold">Latency</p>
+                <p className="text-xs font-extrabold text-slate-800">14 ms (Serverless)</p>
               </div>
             </div>
 
-            <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/50 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="bg-white/90 rounded-xl p-3 border border-emerald-100 flex items-center gap-2.5 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              </div>
               <div>
-                <p className="text-[10px] text-slate-500 font-mono uppercase">SEO Rating</p>
-                <p className="text-xs font-semibold text-emerald-400">98/100 (Optimal)</p>
+                <p className="text-[10px] text-emerald-600 font-mono uppercase font-bold">SEO Rating</p>
+                <p className="text-xs font-extrabold text-emerald-600">98/100 (Optimal)</p>
               </div>
             </div>
           </div>
 
           {/* Interactive Preview Output Console */}
-          <div className="relative bg-slate-950/90 rounded-xl p-4 sm:p-6 border border-slate-800/80 min-h-[260px] font-mono text-sm leading-relaxed overflow-x-auto text-slate-300">
+          <div className="relative bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-800 min-h-[260px] font-mono text-sm leading-relaxed overflow-x-auto text-slate-100 shadow-inner">
             {isGenerating && (
-              <div className="absolute top-3 right-4 flex items-center gap-2 text-xs text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-full border border-indigo-500/20">
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+              <div className="absolute top-3 right-4 flex items-center gap-2 text-xs font-bold text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full border border-pink-500/30">
+                <RefreshCw className="w-3.5 h-3.5 animate-spin text-pink-400" />
                 <span>Streaming Edge AI...</span>
               </div>
             )}
             <pre className="whitespace-pre-wrap font-mono text-xs sm:text-sm text-slate-200">
               {displayedText}
-              {isGenerating && <span className="inline-block w-2 h-4 ml-1 bg-indigo-400 animate-pulse" />}
+              {isGenerating && <span className="inline-block w-2.5 h-4 ml-1 bg-pink-500 animate-pulse" />}
             </pre>
           </div>
         </div>

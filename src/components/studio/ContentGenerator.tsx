@@ -48,13 +48,13 @@ export default async function handler(req: Request) {
 `);
   const [copied, setCopied] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [lastSavedTime, setLastSavedTime] = useState<string>('Saved just now');
 
   useEffect(() => {
     const key = localStorage.getItem('AETHER_GEMINI_API_KEY') || '';
     setApiKey(key);
   }, []);
 
-  // Live Generation Handler using geminiService
   const handleGenerate = async () => {
     setIsGenerating(true);
     setGeneratedMarkdown('');
@@ -74,6 +74,7 @@ export default async function handler(req: Request) {
     });
 
     setIsGenerating(false);
+    setLastSavedTime('Saved just now');
   };
 
   const handleCopy = () => {
@@ -104,6 +105,7 @@ export default async function handler(req: Request) {
       status: 'Draft',
     });
     setSavedSuccess(true);
+    setLastSavedTime('Saved just now');
     setTimeout(() => setSavedSuccess(false), 2500);
   };
 
@@ -111,30 +113,30 @@ export default async function handler(req: Request) {
   const tokenCount = Math.floor(wordCount * 1.3);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-black/[0.08]">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-black text-slate-900 flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-pink-500" />
-              AI Content Studio
+            <h1 className="font-editorial text-3xl font-black text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-6 h-6 text-indigo-600" />
+              Writing & Publishing Studio
             </h1>
 
             {/* API Key Status Pill */}
             {apiKey ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono font-bold shadow-xs">
-                <Key className="w-3.5 h-3.5 text-emerald-600" /> Gemini Live API Connected
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold">
+                <Key className="w-3.5 h-3.5 text-emerald-600" /> Gemini Live Connected
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-700 text-xs font-mono font-bold shadow-xs">
-                <Zap className="w-3.5 h-3.5 text-amber-500" /> Edge Demo Mode
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-800 text-xs font-mono font-bold">
+                <Zap className="w-3.5 h-3.5 text-amber-500" /> Demo Mode Active
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-500">
-            Configure prompt parameters, stream AI prose via Gemini, and export to your library.
+          <p className="text-xs text-slate-500 font-mono">
+            {lastSavedTime} • Distraction-Free Canvas
           </p>
         </div>
 
@@ -142,24 +144,24 @@ export default async function handler(req: Request) {
         <div className="flex items-center gap-3">
           <button
             onClick={handleSaveToLibrary}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-violet-600 to-pink-500 hover:from-violet-700 hover:to-pink-600 shadow-md shadow-violet-500/20 transition-all"
+            className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 shadow-md transition-all"
           >
             {savedSuccess ? (
               <>
-                <Check className="w-4 h-4 text-emerald-300" />
-                <span className="text-emerald-100">Saved to Library</span>
+                <Check className="w-4 h-4 text-emerald-400" />
+                <span>Saved to Library</span>
               </>
             ) : (
               <>
-                <Save className="w-4 h-4" />
-                <span>Save to Drafts</span>
+                <Save className="w-4 h-4 text-indigo-300" />
+                <span>Save Draft</span>
               </>
             )}
           </button>
           
           <button
             onClick={handleDownloadMd}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-200/90 hover:text-slate-900 hover:bg-slate-50 shadow-xs transition-all"
+            className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold text-slate-700 bg-white border border-black/[0.08] hover:bg-slate-50 shadow-2xs transition-all"
           >
             <Download className="w-4 h-4 text-slate-500" />
             <span>Export .MD</span>
@@ -168,15 +170,15 @@ export default async function handler(req: Request) {
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Left Form Controls Column */}
-        <div className="lg:col-span-5 glass-card rounded-3xl p-6 border border-slate-200 space-y-5 shadow-lg">
+        <div className="lg:col-span-5 bg-white rounded-3xl p-7 border border-black/[0.07] space-y-5 shadow-xs">
           
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-            <h2 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-purple-600" />
-              Prompt & Model Configuration
+          <div className="flex items-center justify-between pb-3 border-b border-black/[0.06]">
+            <h2 className="font-editorial text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Sliders className="w-4 h-4 text-indigo-600" />
+              Story Prompt Parameters
             </h2>
             <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 font-mono">
               Ready
@@ -185,25 +187,25 @@ export default async function handler(req: Request) {
 
           {/* Article Title */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-violet-600" />
-              Article Title / Core Topic
+            <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-indigo-600" />
+              Story Headline / Topic
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-violet-500 shadow-xs"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-black/[0.08] text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600"
             />
           </div>
 
           {/* Content Template */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700">Content Template</label>
+            <label className="text-xs font-bold text-slate-700">Editorial Category</label>
             <select
               value={contentType}
               onChange={(e) => setContentType(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-violet-500 shadow-xs"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-black/[0.08] text-slate-900 text-xs font-semibold focus:outline-none focus:border-indigo-600"
             >
               <option value="Technical Guide">Technical Architecture Guide</option>
               <option value="Deep-Dive Blog Post">Deep-Dive Blog Post</option>
@@ -215,14 +217,14 @@ export default async function handler(req: Request) {
 
           {/* LLM Model Router */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+            <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
               <Bot className="w-3.5 h-3.5 text-emerald-600" />
-              Inference LLM Engine
+              AI Inference Engine
             </label>
             <select
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-violet-500 shadow-xs"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-black/[0.08] text-slate-900 text-xs font-semibold focus:outline-none focus:border-indigo-600"
             >
               <option value="Gemini 3.5 Flash">Gemini 3.5 Flash (Sub-15ms)</option>
               <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet (Prose & Nuance)</option>
@@ -232,22 +234,22 @@ export default async function handler(req: Request) {
 
           {/* Target Audience Profile */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700">Target Audience Persona</label>
+            <label className="text-xs font-bold text-slate-700">Target Audience Persona</label>
             <input
               type="text"
               value={audience}
               onChange={(e) => setAudience(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-violet-500 shadow-xs"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-black/[0.08] text-slate-900 text-xs font-medium focus:outline-none focus:border-indigo-600"
             />
           </div>
 
           {/* Tone Selector */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700">Brand Tone</label>
+            <label className="text-xs font-bold text-slate-700">Brand Tone</label>
             <select
               value={tone}
               onChange={(e) => setTone(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-violet-500 shadow-xs"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-black/[0.08] text-slate-900 text-xs font-semibold focus:outline-none focus:border-indigo-600"
             >
               <option value="Technical & Authoritative">Technical & Authoritative</option>
               <option value="Engaging & Conversational">Engaging & Conversational</option>
@@ -257,20 +259,20 @@ export default async function handler(req: Request) {
 
           {/* SEO Keywords Input */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+            <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
               <Tag className="w-3.5 h-3.5 text-amber-600" />
-              Target SEO Keywords (Comma Separated)
+              Target SEO Keywords
             </label>
             <input
               type="text"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-violet-500 shadow-xs"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-black/[0.08] text-slate-900 text-xs font-medium focus:outline-none focus:border-indigo-600"
             />
           </div>
 
           {/* Web Search Grounding Toggle */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-black/[0.06]">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-sky-600" />
               <div>
@@ -281,7 +283,7 @@ export default async function handler(req: Request) {
             <button
               onClick={() => setWebGrounding(!webGrounding)}
               className={`w-10 h-6 rounded-full p-1 transition-colors ${
-                webGrounding ? 'bg-violet-600' : 'bg-slate-300'
+                webGrounding ? 'bg-indigo-600' : 'bg-slate-300'
               }`}
             >
               <div
@@ -296,7 +298,7 @@ export default async function handler(req: Request) {
           <button
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full py-3.5 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-violet-600 via-pink-500 to-sky-500 hover:from-violet-700 hover:to-sky-600 shadow-lg shadow-violet-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-4 rounded-full font-bold text-sm text-white bg-slate-900 hover:bg-slate-800 shadow-md shadow-slate-900/10 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isGenerating ? (
               <>
@@ -306,18 +308,18 @@ export default async function handler(req: Request) {
             ) : (
               <>
                 <Play className="w-4 h-4 fill-white" />
-                <span>Generate Content</span>
+                <span>Generate Story</span>
               </>
             )}
           </button>
 
         </div>
 
-        {/* Right Column: Editor Console */}
-        <div className="lg:col-span-7 glass-card rounded-3xl p-6 border border-slate-200 flex flex-col min-h-[620px] shadow-lg relative">
+        {/* Right Column: Writing Canvas */}
+        <div className="lg:col-span-7 bg-white rounded-3xl p-7 border border-black/[0.07] flex flex-col min-h-[620px] shadow-xs relative">
           
           {/* Top Metric Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-black/[0.06]">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -327,33 +329,33 @@ export default async function handler(req: Request) {
                 <Gauge className="w-4 h-4 text-sky-600" />
                 <span>Tokens: <strong>{tokenCount}</strong></span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-violet-700">
-                <Zap className="w-4 h-4 text-violet-600" />
+              <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-700">
+                <Zap className="w-4 h-4 text-indigo-600" />
                 <span>Latency: <strong>14ms</strong></span>
               </div>
             </div>
 
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-xs font-semibold text-slate-700 border border-slate-200 transition-colors"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 text-xs font-bold text-slate-700 border border-black/[0.06] transition-colors"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-violet-600" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-indigo-600" />}
               <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
 
-          {/* Editor Console with High Contrast Code Box */}
-          <div className="flex-1 bg-slate-900 rounded-2xl p-5 border border-slate-800 my-4 font-mono text-xs sm:text-sm leading-relaxed text-slate-100 overflow-y-auto max-h-[480px] shadow-inner">
+          {/* Editor Console */}
+          <div className="flex-1 bg-slate-900 rounded-2xl p-6 border border-slate-800 my-4 font-mono text-xs sm:text-sm leading-relaxed text-slate-100 overflow-y-auto max-h-[480px] shadow-inner">
             <pre className="whitespace-pre-wrap font-mono">
               {generatedMarkdown}
-              {isGenerating && <span className="inline-block w-2 h-4 ml-1 bg-pink-500 animate-pulse" />}
+              {isGenerating && <span className="inline-block w-2 h-4 ml-1 bg-indigo-500 animate-pulse" />}
             </pre>
           </div>
 
           {/* Footer Info */}
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-500 font-mono pt-2 border-t border-slate-200">
+          <div className="flex items-center justify-between text-xs font-semibold text-slate-500 font-mono pt-2 border-t border-black/[0.06]">
             <span>Words: <strong className="text-slate-900">{wordCount}</strong></span>
-            <span>Provider: <strong className="text-violet-600">Google Gen AI SDK</strong></span>
+            <span>Provider: <strong className="text-indigo-600">Google Gen AI SDK</strong></span>
             <span>Status: <strong className="text-emerald-600">Ready to Publish</strong></span>
           </div>
 

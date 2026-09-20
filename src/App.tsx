@@ -13,21 +13,43 @@ import { ContentLibrary } from './components/studio/ContentLibrary';
 import { BrandVault } from './components/studio/BrandVault';
 import { SettingsView } from './components/studio/SettingsView';
 
+import { SearchModal } from './components/SearchModal';
+import { ArticleReaderModal } from './components/ArticleReaderModal';
 import { Sparkles, X, CheckCircle2 } from 'lucide-react';
 
 export function App() {
   const [currentView, setCurrentView] = useState<'landing' | 'studio'>('landing');
   const [studioTab, setStudioTab] = useState<StudioTab>('generator');
+  
+  // Modals State
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [readingArticle, setReadingArticle] = useState<any | null>(null);
   const [activeModal, setActiveModal] = useState<{ title: string; message: string } | null>(null);
 
-  // Shared State for Saved Drafts
+  // Shared State for Saved Drafts & Published Stories
   const [drafts, setDrafts] = useState<DraftItem[]>([
     {
       id: '1',
       title: 'Building Edge-Native Microservices with Serverless AI',
-      type: 'Technical Guide',
+      type: 'Technical Architecture',
       model: 'Gemini 3.5 Flash',
-      content: `## Executive Summary\nServerless edge computing empowers engineering teams to execute AI inferencing nearest to the client without managing container clusters or cold start penalties.`,
+      content: `## Executive Summary
+Serverless edge computing empowers engineering teams to execute AI inferencing nearest to the client without managing container clusters or cold start penalties.
+
+### Key Architectural Pillars
+1. **Microsecond Edge Cold Starts**: Requests land on global Cloudflare Workers & AWS Edge locations.
+2. **Real-Time Gemini AI Streaming**: Tokens stream directly back to client browsers without gateway timeouts.
+3. **Automated CMS Webhooks**: Push formatted markdown to Hashnode, Dev.to, and Ghost simultaneously.
+
+\`\`\`typescript
+import { createEdgeAI } from '@aether/edge-sdk';
+
+export default async function handler(req: Request) {
+  const ai = createEdgeAI({ model: 'gemini-3.5-flash' });
+  return await ai.streamResponse({ prompt: req.body.prompt });
+}
+\`\`\`
+`,
       wordCount: 380,
       seoScore: 98,
       status: 'Ready to Publish',
@@ -76,16 +98,22 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-indigo-500 selection:text-white font-sans">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#171717] selection:bg-indigo-600 selection:text-white font-sans">
       
       {currentView === 'landing' ? (
         <div className="flex flex-col min-h-screen">
-          {/* Top Navbar */}
-          <Navbar onOpenApp={handleOpenStudio} />
+          {/* Top Editorial Navbar */}
+          <Navbar 
+            onOpenApp={handleOpenStudio}
+            onOpenSearch={() => setIsSearchOpen(true)}
+          />
 
           {/* Main Landing Sections */}
           <main className="flex-1">
-            <Hero onGetStarted={handleOpenStudio} />
+            <Hero 
+              onGetStarted={handleOpenStudio}
+              onReadArticle={(article) => setReadingArticle(article)}
+            />
             <FeatureGrid />
             <InteractiveDemo onLaunchApp={handleOpenStudio} />
             <ArchitectureSection />
@@ -97,7 +125,7 @@ export function App() {
         </div>
       ) : (
         /* Creator Studio Workspace View */
-        <div className="flex min-h-screen bg-[#07090e]">
+        <div className="flex min-h-screen bg-[#FAF9F6]">
           <StudioSidebar
             activeTab={studioTab}
             onSelectTab={setStudioTab}
@@ -122,35 +150,50 @@ export function App() {
         </div>
       )}
 
+      {/* ⌘ K Spotlight Search Modal */}
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        onSelectArticle={(art) => setReadingArticle(art)}
+        articles={drafts}
+      />
+
+      {/* Full-Screen Article Reader Experience Modal */}
+      <ArticleReaderModal
+        article={readingArticle}
+        onClose={() => setReadingArticle(null)}
+        onSelectArticle={(art) => setReadingArticle(art)}
+      />
+
       {/* Action Notification Modal */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md glass-card rounded-2xl p-6 border border-indigo-500/40 shadow-2xl glow-indigo space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-white rounded-3xl p-7 border border-black/[0.08] shadow-2xl space-y-5">
             <button
               onClick={() => {
                 setActiveModal(null);
                 handleOpenStudio();
               }}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 p-1.5 rounded-full hover:bg-slate-100"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+            <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600">
               <Sparkles className="w-6 h-6" />
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+              <h3 className="font-editorial text-2xl font-bold text-slate-900">
                 {activeModal.title}
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 {activeModal.message}
               </p>
             </div>
 
-            <div className="pt-2 flex items-center gap-2 text-xs text-emerald-400 font-mono">
-              <CheckCircle2 className="w-4 h-4" /> Creator Studio Workspace Ready
+            <div className="pt-2 flex items-center gap-2 text-xs text-emerald-700 font-mono font-bold">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Creator Studio Ready
             </div>
 
             <button
@@ -158,7 +201,7 @@ export function App() {
                 setActiveModal(null);
                 handleOpenStudio();
               }}
-              className="w-full py-2.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-indigo-500 to-purple-600 shadow-md hover:from-indigo-600 hover:to-purple-700 transition-all"
+              className="w-full py-3.5 rounded-full font-bold text-xs text-white bg-slate-900 hover:bg-slate-800 shadow-md transition-all"
             >
               Enter Studio Workspace →
             </button>

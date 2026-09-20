@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ArrowRight, Zap, CheckCircle2, Copy, Check, RefreshCw, Bot, Gauge, Flame } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Bot, Clock, BookOpen } from 'lucide-react';
 
 const PROMPT_PRESETS = [
   {
@@ -24,258 +24,147 @@ export default async function handler(req: Request) {
 }
 \`\`\`
 `
-  },
-  {
-    title: "SaaS Launch Announcement Thread",
-    type: "Social Thread",
-    model: "Claude 3.5 Sonnet",
-    content: `🚀 Introducing AetherAI v2.0 - The Serverless AI Content Engine built for modern growth teams.
-
-1/6 Building high-converting technical content usually takes hours of research, SEO formatting, and multi-channel publishing.
-
-2/6 Today, we're changing that. AetherAI orchestrates Gemini 3.5 & GPT-4o over serverless edge workers to auto-generate, format, and push content directly to your headless CMS.
-
-3/6 ⚡ Real-time web search grounding
-🎯 Automated SEO keyword density analysis
-🔄 Instant Webhook triggers for Hashnode & Dev.to
-
-Try it today -> https://aether.ai`
-  },
-  {
-    title: "Autonomous Content Marketing Strategy",
-    type: "SEO Brief",
-    model: "GPT-4o",
-    content: `# SEO Content Blueprint: Developer Tooling & Serverless
-
-### Search Intent Profile
-- **Primary Keywords**: serverless blog app, AI content generator API, edge functions content engine
-- **Target Audience**: Technical Founders, Product Engineers, Developer Advocates
-
-### Recommended Outline & Topic Cluster
-1. What is a Serverless AI Content Engine? (Target Vol: 14,200/mo)
-2. How to Stream AI Responses in Next.js & React (Target Vol: 8,900/mo)
-3. Comparing Serverless Cold Starts Across AWS Lambda vs Cloudflare Workers`
   }
 ];
 
-export const Hero: React.FC<{ onGetStarted?: () => void }> = ({ onGetStarted }) => {
-  const [selectedPresetIndex, setSelectedPresetIndex] = useState(0);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [displayedText, setDisplayedText] = useState(PROMPT_PRESETS[0].content);
-  const [copied, setCopied] = useState(false);
-  const [tokensPerSec] = useState(148);
+interface HeroProps {
+  onGetStarted?: () => void;
+  onReadArticle?: (article: any) => void;
+}
 
-  const currentPreset = PROMPT_PRESETS[selectedPresetIndex];
+export const Hero: React.FC<HeroProps> = ({ onGetStarted, onReadArticle }) => {
+  const [displayedText] = useState(PROMPT_PRESETS[0].content);
 
-  // Handle Preset Switching with simulated streaming
-  const handleSelectPreset = (index: number) => {
-    if (index === selectedPresetIndex) return;
-    setSelectedPresetIndex(index);
-    setIsGenerating(true);
-    setDisplayedText("");
-
-    const targetContent = PROMPT_PRESETS[index].content;
-    let currentLength = 0;
-
-    const interval = setInterval(() => {
-      currentLength += Math.floor(Math.random() * 8) + 4;
-      if (currentLength >= targetContent.length) {
-        setDisplayedText(targetContent);
-        setIsGenerating(false);
-        clearInterval(interval);
-      } else {
-        setDisplayedText(targetContent.slice(0, currentLength));
-      }
-    }, 30);
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(displayedText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const featuredArticle = {
+    title: "Building Edge-Native Microservices with Serverless AI",
+    type: "Technical Architecture",
+    excerpt: "Discover how engineering teams combine serverless edge functions with Gemini AI streaming pipelines to execute microsecond inferencing nearest to the user.",
+    content: PROMPT_PRESETS[0].content,
+    wordCount: 420,
+    createdAt: "Sep 20, 2026",
+    model: "Gemini 3.5 Flash",
   };
 
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
       
-      {/* Soft Pastel Mesh Background Orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-purple-200/70 via-pink-200/60 to-sky-200/70 blur-[130px] rounded-full pointer-events-none animate-pulse-glow" />
-      <div className="absolute top-1/3 left-10 w-[350px] h-[350px] bg-amber-100/80 blur-[110px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 right-10 w-[350px] h-[350px] bg-cyan-100/80 blur-[110px] rounded-full pointer-events-none" />
+      {/* Background Soft Atmosphere */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-indigo-50/50 via-purple-50/30 to-transparent pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
+        
+        {/* Main Editorial Hero Typography */}
         <div className="text-center max-w-4xl mx-auto space-y-6">
           
-          {/* Eyebrow Badge with Soft Pastel Styling */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-violet-200 shadow-md shadow-violet-500/5 backdrop-blur-md">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-pink-500 animate-ping" />
-            <span className="flex h-2.5 w-2.5 rounded-full bg-pink-500 absolute" />
-            <span className="text-xs font-bold text-slate-700 tracking-wide pl-2">
-              Next-Gen Serverless AI Content Platform
-            </span>
-            <span className="text-slate-300">|</span>
-            <span className="text-xs font-bold text-violet-600 flex items-center gap-1">
-              Gemini 3.5 Engine <Sparkles className="w-3.5 h-3.5 text-pink-500" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-black/[0.08] shadow-2xs">
+            <Sparkles className="w-4 h-4 text-indigo-600" />
+            <span className="text-xs font-bold text-slate-700 font-mono tracking-wide">
+              Serverless AI Editorial Platform
             </span>
           </div>
 
-          {/* Main Pastel Gradient Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.1]">
-            Craft, Scale & Publish Content with{" "}
-            <span className="text-gradient-pastel drop-shadow-xs">
-              Serverless AI Intelligence
-            </span>
+          <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.12]">
+            Ideas worth <span className="italic text-indigo-600 font-normal">slowing down</span> for.
           </h1>
 
-          {/* Subheading */}
           <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Generate SEO-optimized articles, social campaigns, and documentation in milliseconds. Built on serverless edge functions with zero cold starts.
+            Discover thoughtful technical stories, architectural guides, and AI-powered ideas from a community of curious engineering writers.
           </p>
 
-          {/* Pastel Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button
               onClick={onGetStarted}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-base text-white bg-gradient-to-r from-violet-600 via-pink-500 to-sky-500 hover:from-violet-700 hover:to-sky-600 shadow-xl shadow-violet-500/20 hover:shadow-violet-500/35 transition-all flex items-center justify-center gap-2.5 group active:scale-95"
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-sm text-white bg-slate-900 hover:bg-slate-800 shadow-lg shadow-slate-900/10 hover:shadow-slate-900/20 transition-all flex items-center justify-center gap-2.5 group active:scale-95"
             >
-              Start Generating Free
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <span>Start Writing & Publishing</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-indigo-300" />
             </button>
-            <a
-              href="#architecture"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-base text-slate-700 bg-white/90 hover:bg-white border border-slate-200/90 hover:text-slate-900 transition-all flex items-center justify-center gap-2 shadow-sm"
+            <button
+              onClick={() => onReadArticle?.(featuredArticle)}
+              className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-sm text-slate-700 bg-white hover:bg-slate-50 border border-black/[0.08] shadow-2xs transition-all flex items-center justify-center gap-2"
             >
-              <Zap className="w-4 h-4 text-amber-500" />
-              View Architecture
-            </a>
+              <BookOpen className="w-4 h-4 text-indigo-600" />
+              <span>Read Featured Story</span>
+            </button>
           </div>
 
-          {/* Feature Highlights Pill Bar */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-600 font-semibold">
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-emerald-200 shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span>Sub-15ms Cold Starts</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-purple-200 shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-purple-500" />
-              <span>Multi-Model Routing</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-sky-200 shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-sky-500" />
-              <span>Direct Headless CMS Sync</span>
-            </div>
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 font-semibold font-mono">
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Sub-15ms Edge Latency</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-indigo-600" /> Google Gemini Stream</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-purple-600" /> Multi-CMS Webhook Dispatch</span>
           </div>
         </div>
 
-        {/* Live Studio Mock Widget with Light Glassmorphism */}
-        <div className="mt-14 max-w-5xl mx-auto rounded-3xl glass-card-vibrant p-3 sm:p-5 shadow-2xl">
-          
-          {/* Top Bar Header */}
-          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-white/90 rounded-2xl border border-slate-200/80 shadow-xs">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-rose-400" />
-                <div className="w-3 h-3 rounded-full bg-amber-400" />
-                <div className="w-3 h-3 rounded-full bg-emerald-400" />
+        {/* Featured Story Spotlight Card (High Editorial Weight) */}
+        <div className="max-w-5xl mx-auto editorial-card rounded-3xl p-8 sm:p-10 border border-black/[0.08] shadow-xl relative overflow-hidden bg-white">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <div className="lg:col-span-7 space-y-5">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wide font-mono">
+                  ★ Featured Editorial Story
+                </span>
+                <span className="text-xs font-mono text-slate-400">Sep 20, 2026</span>
               </div>
-              <span className="text-xs font-mono font-bold text-slate-700 ml-2 flex items-center gap-1.5">
-                <Bot className="w-4 h-4 text-violet-600" />
-                Aether Edge AI Studio
-              </span>
+
+              <h2 
+                onClick={() => onReadArticle?.(featuredArticle)}
+                className="font-editorial text-2xl sm:text-3xl font-black text-slate-900 hover:text-indigo-600 cursor-pointer transition-colors leading-snug"
+              >
+                {featuredArticle.title}
+              </h2>
+
+              <p className="text-slate-600 text-sm leading-relaxed font-normal line-clamp-3">
+                {featuredArticle.excerpt}
+              </p>
+
+              <div className="pt-2 flex items-center justify-between text-xs font-semibold text-slate-500">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[10px]">
+                    CR
+                  </div>
+                  <span className="text-slate-900 font-bold">Chaitra Reddy</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1 font-mono text-slate-400">
+                    <Clock className="w-3.5 h-3.5" /> 3 min read
+                  </span>
+                  <button
+                    onClick={() => onReadArticle?.(featuredArticle)}
+                    className="flex items-center gap-1 text-indigo-600 font-bold hover:underline"
+                  >
+                    <span>Read Article</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Presets Selection Tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto py-1">
-              {PROMPT_PRESETS.map((preset, idx) => (
+            {/* AI Generator Mini Preview Console */}
+            <div className="lg:col-span-5 bg-slate-900 rounded-2xl p-5 text-slate-200 font-mono text-xs leading-relaxed border border-slate-800 space-y-3 shadow-md">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-800 text-[11px] text-slate-400">
+                <span className="flex items-center gap-1.5 font-bold text-slate-300">
+                  <Bot className="w-4 h-4 text-indigo-400" />
+                  Gemini Edge Generator
+                </span>
+                <span className="text-emerald-400 font-bold">STREAM_ACTIVE</span>
+              </div>
+
+              <pre className="whitespace-pre-wrap font-mono text-slate-300 max-h-48 overflow-y-auto">
+                {displayedText.slice(0, 240)}...
+              </pre>
+
+              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span>Speed: <strong className="text-indigo-300">148 t/s</strong></span>
                 <button
-                  key={idx}
-                  onClick={() => handleSelectPreset(idx)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                    selectedPresetIndex === idx
-                      ? 'bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-md shadow-violet-500/20'
-                      : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
-                  }`}
+                  onClick={() => onReadArticle?.(featuredArticle)}
+                  className="text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
                 >
-                  <Sparkles className={`w-3.5 h-3.5 ${selectedPresetIndex === idx ? 'text-white' : 'text-violet-500'}`} />
-                  {preset.type}
+                  <span>Open Full Reader</span> →
                 </button>
-              ))}
-            </div>
-
-            {/* Copy Button */}
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/80 px-3.5 py-1.5 rounded-xl border border-slate-200 transition-colors"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-600 font-bold">Copied</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-violet-600" />
-                  <span>Copy Content</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Model Status Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 px-1">
-            <div className="bg-white/90 rounded-xl p-3 border border-purple-100 flex items-center gap-2.5 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-[10px] text-purple-600 font-mono uppercase font-bold">Active Model</p>
-                <p className="text-xs font-extrabold text-slate-800">{currentPreset.model}</p>
               </div>
             </div>
 
-            <div className="bg-white/90 rounded-xl p-3 border border-sky-100 flex items-center gap-2.5 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center">
-                <Gauge className="w-4 h-4 text-sky-600" />
-              </div>
-              <div>
-                <p className="text-[10px] text-sky-600 font-mono uppercase font-bold">Generation Speed</p>
-                <p className="text-xs font-extrabold text-slate-800">{tokensPerSec} tokens/sec</p>
-              </div>
-            </div>
-
-            <div className="bg-white/90 rounded-xl p-3 border border-amber-100 flex items-center gap-2.5 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-                <Flame className="w-4 h-4 text-amber-600" />
-              </div>
-              <div>
-                <p className="text-[10px] text-amber-600 font-mono uppercase font-bold">Latency</p>
-                <p className="text-xs font-extrabold text-slate-800">14 ms (Serverless)</p>
-              </div>
-            </div>
-
-            <div className="bg-white/90 rounded-xl p-3 border border-emerald-100 flex items-center gap-2.5 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              </div>
-              <div>
-                <p className="text-[10px] text-emerald-600 font-mono uppercase font-bold">SEO Rating</p>
-                <p className="text-xs font-extrabold text-emerald-600">98/100 (Optimal)</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Interactive Preview Output Console */}
-          <div className="relative bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-800 min-h-[260px] font-mono text-sm leading-relaxed overflow-x-auto text-slate-100 shadow-inner">
-            {isGenerating && (
-              <div className="absolute top-3 right-4 flex items-center gap-2 text-xs font-bold text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full border border-pink-500/30">
-                <RefreshCw className="w-3.5 h-3.5 animate-spin text-pink-400" />
-                <span>Streaming Edge AI...</span>
-              </div>
-            )}
-            <pre className="whitespace-pre-wrap font-mono text-xs sm:text-sm text-slate-200">
-              {displayedText}
-              {isGenerating && <span className="inline-block w-2.5 h-4 ml-1 bg-pink-500 animate-pulse" />}
-            </pre>
           </div>
         </div>
 

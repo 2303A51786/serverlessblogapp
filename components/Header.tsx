@@ -14,7 +14,7 @@ export function Header() {
               Aether
             </span>
             <span className="text-[10px] uppercase tracking-widest text-[#86937D] font-medium">
-              Editorial Blog
+              Editorial Platform
             </span>
           </div>
         </Link>
@@ -24,11 +24,14 @@ export function Header() {
           <Link href="/" className="hover:text-[#1A1A1A] transition-colors">
             Feed
           </Link>
+          <Link href="/studio/video-captions" className="hover:text-[#1A1A1A] transition-colors flex items-center gap-1.5 font-semibold text-[#86937D]">
+            <span className="flex h-2 w-2 rounded-full bg-[#C28C7E] animate-pulse"></span>
+            Video Reach AI
+          </Link>
           <Link href="/#topics" className="hover:text-[#1A1A1A] transition-colors">
             Topics
           </Link>
-          <Link href="/rss.xml" className="hover:text-[#1A1A1A] transition-colors flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#C28C7E]"></span>
+          <Link href="/rss.xml" className="hover:text-[#1A1A1A] transition-colors">
             RSS Feed
           </Link>
           <Link
@@ -41,6 +44,12 @@ export function Header() {
 
         {/* Quick action button */}
         <div className="flex items-center space-x-4">
+          <Link
+            href="/studio/video-captions"
+            className="hidden sm:inline-block rounded-full border border-[#86937D] bg-[#86937D]/10 px-4 py-2 text-xs font-semibold text-[#86937D] hover:bg-[#86937D]/20 transition-colors"
+          >
+            Hashtag AI Studio
+          </Link>
           <a
             href="#newsletter"
             className="rounded-full bg-[#1A1A1A] px-5 py-2 text-xs font-medium text-[#FBFBFA] hover:bg-[#333333] transition-colors shadow-xs"
